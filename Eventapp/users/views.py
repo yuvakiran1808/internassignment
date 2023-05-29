@@ -3,14 +3,16 @@ from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
 from .serializers import UserSerializer
 from .models import User
-import jwt, datetime
+import jwt
+import datetime
 from django.http import HttpResponse
 
 
 def home(request):
     return HttpResponse("Hello welcome to the app")
 
-# Create your views here.
+# API view for user registration
+
 class RegisterView(APIView):
     def post(self, request):
         serializer = UserSerializer(data=request.data)
@@ -18,7 +20,7 @@ class RegisterView(APIView):
         serializer.save()
         return Response(serializer.data)
 
-
+# API view for user login
 class LoginView(APIView):
     def post(self, request):
         email = request.data['email']
@@ -45,11 +47,11 @@ class LoginView(APIView):
         response.set_cookie(key='jwt', value=token, httponly=True)
         response.data = {
             'jwt': token,
-            'id' : user.id,
+            'id': user.id,
         }
         return response
 
-
+# API view for retrieving user information
 class UserView(APIView):
 
     def get(self, request):
@@ -67,6 +69,7 @@ class UserView(APIView):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+# API view for user logout
 
 class LogoutView(APIView):
     def post(self, request):
@@ -76,7 +79,3 @@ class LogoutView(APIView):
             'message': 'success'
         }
         return response
-    
-
-
-

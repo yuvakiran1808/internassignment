@@ -7,18 +7,20 @@ import { isAuthenticated } from "../user/userapicalls";
 const Myevents = () => {
   const user = isAuthenticated();
 
+
   const [events, setEvents] = useState([]);
+
+  // Function to fetch all events data
   const getAllevents = () => {
     getAllEvents().then((data) => {
-      setEvents(data);
+      setEvents(data);   // Set the events data received from the server
     });
   };
 
   useEffect(() => {
-    getAllevents();
+    getAllevents();  // Call the getAllevents function when the component mounts or when "toggle" state changes
   }, []);
 
-  console.log(events);
   return (
     <div>
       <Menu />

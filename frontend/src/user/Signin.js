@@ -7,21 +7,26 @@ const Signin = () => {
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
+  // Function to handle the change event when the email input is modified
   const onChangeEmailHandler = (e) => {
     setEmail(e.target.value);
   };
 
-  const onChangePasswordHandler = (e) => {
+// Function to handle the change event when the password input is modified
+
+const onChangePasswordHandler = (e) => {
     setPassword(e.target.value);
   };
 
+  // Function to handle the signin
+
   const onSubmitSigninHandler = (e) => {
     e.preventDefault();
-    signin({ email, password })
+    signin({ email, password })  // Call the signin function with the email and password
       .then((data) => {
         if (!data.detail) {
           authenticate(data, () => {
-            navigate("/");
+            navigate("/");  // Navigate to the specified path ("/" in this case) after successful authentication
           });
         }
       })

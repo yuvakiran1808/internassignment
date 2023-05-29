@@ -5,6 +5,7 @@ from .models import Event
 from .serializers import EventSerializer
 from rest_framework import generics
 
+# API view for creating an event
 
 class create_event(APIView):
     def post(self, request):
@@ -14,6 +15,7 @@ class create_event(APIView):
                return Response(serializer.data)
             return Response(serializer.errors)
 
+# API view for liking/unliking an event
 
 class Like_event(APIView):
      def post(self, request, event_id):
@@ -30,6 +32,7 @@ class Like_event(APIView):
               serializer = EventSerializer(event)
               return Response(serializer.data)
 
+# API view for retrieving a list of events
 class EventListAPIView(generics.ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer

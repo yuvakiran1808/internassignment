@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Menu from "../components/Menu";
-import {isAuthenticated } from "../user/userapicalls";
-import {createEvent} from "./eventapicalls";
+import { isAuthenticated } from "../user/userapicalls";
+import { createEvent } from "./eventapicalls";
 
 const Createevent = () => {
   const user = isAuthenticated();
-  
+
   const [eventname, setEventname] = useState();
   const [description, setDescription] = useState();
   const [location, setLocation] = useState();
@@ -13,53 +13,57 @@ const Createevent = () => {
   const [image, setImage] = useState();
   const [userid, setUserId] = useState(user.id);
 
+  // Function to handle the change event when the eventname input is modified
+  const onEventnameChangeHandler = (e) => {
+    setEventname(e.target.value); //Set the new value to the event name variable
+  };
+  // Function to handle the change event when the description is modified
+  const onDescriptionChangeHandler = (e) => {
+    setDescription(e.target.value); //Set the new vale for the description
+  };
+  // Function to handle the change event when the location input is modified
+  const onLocationChangeHandler = (e) => {
+    setLocation(e.target.value); // Set the new value to the location variable
+  };
+  // Function to handle the change event when the image input is modified
+  const onimageChangeHandler = (e) => {
+    setImage(e.target.files[0]); // Set the selected image file to the "image" variable
+  };
 
+  // Function to handle the change event when the time input is modified
+  const onTimeChangeHandler = (e) => {
+    setTime(e.target.value); // Set the new value of the time input to the "time" variable
+  };
 
-     
-  const eventDate = new Date();  // Replace with your actual date value
-  const formattedDate = eventDate.toISOString().split('T')[0];
-  const formattedTime = eventDate.toTimeString().split(' ')[0];
-  
-  const onEventnameChangeHandler = (e)=>{
-         setEventname(e.target.value)
-  }
-  const onDescriptionChangeHandler = (e)=>{
-      setDescription(e.target.value)
-  }
-  const onLocationChangeHandler = (e)=>{
-        setLocation(e.target.value)
-  }
-  const onimageChangeHandler = (e)=>{
-       setImage(e.target.files[0])
-  }
+  // Function to handle the form submission when creating an event
 
-  const onTimeChangeHandler = (e)=>{
-          setTime(e.target.value);
-  }
+  const onSubmitCreateEvent = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    setUserId(parseInt(user.id)); // Set the user ID to the "userId" variable after parsing it as an integer
 
+    const formData = new FormData(); // Create a new FormData object to store the form data
 
-  const onSubmitCreateEvent = (e)=>{
-         e.preventDefault();
-         setUserId(parseInt(user.id));
-         setTime(formattedDate+"T"+formattedTime+"Z");
-         console.log(formattedDate+"T"+formattedTime+".000Z")
-         const formData = new FormData();
-         formData.append("event_name",eventname);
-         formData.append("data",description);
-         formData.append("time",time);
-         formData.append("location",location);
-         formData.append("image",image);
-         formData.append("user_Id",userid);
-         
-         createEvent(formData).then((data)=>{
-              console.log(data);
-         })
-         setEventname("")
-         setDescription("")
-         setLocation("")
-         setTime("")
-         setUserId(0)
-  }
+    // Append the form data to the formData object
+    formData.append("event_name", eventname);
+    formData.append("data", description);
+    formData.append("time", time);
+    formData.append("location", location);
+    formData.append("image", image);
+    formData.append("user_Id", userid);
+
+      // Call the createEvent function with the formData object as an argument
+
+    createEvent(formData).then((data) => {
+      console.log(data);
+    });
+
+      // Reset the form input values to empty strings and the user ID to 0
+    setEventname("");
+    setDescription("");
+    setLocation("");
+    setTime("");
+    setUserId(0);
+  };
 
   return (
     <div>
@@ -70,7 +74,7 @@ const Createevent = () => {
             Enter event name:
           </label>
           <input
-           value={eventname}
+            value={eventname}
             type="text"
             placeholder="name"
             className="form-control border border-dark py-2"
@@ -84,7 +88,7 @@ const Createevent = () => {
             Enter event description:
           </label>
           <input
-          value={description}
+            value={description}
             type="text"
             placeholder="Description"
             className="form-control border border-dark py-2"
@@ -98,7 +102,7 @@ const Createevent = () => {
             Enter location:
           </label>
           <input
-          value={location}
+            value={location}
             type="text"
             placeholder="location"
             className="form-control border border-dark py-2"
@@ -112,7 +116,7 @@ const Createevent = () => {
             select Time:
           </label>
           <input
-          value={time}
+            value={time}
             type="datetime-local"
             className="form-control border border-dark py-2"
             id="time"
@@ -134,7 +138,7 @@ const Createevent = () => {
         </div>
         <div className="mt-3 text-center text-dark p-2">
           <button
-          onClick={onSubmitCreateEvent}
+            onClick={onSubmitCreateEvent}
             type="button"
             className="btn btn-outline-warning text-dark w-100 text-lg"
           >

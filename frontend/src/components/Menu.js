@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faHeart, faCalendar,faRightToBracket,faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { signout, isAuthenticated } from "../user/userapicalls";
+
+
+//nav bar component
+
 const Menu = () => {
   return (
     <div className="px-3 shadow-sm ">

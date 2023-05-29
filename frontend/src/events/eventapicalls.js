@@ -1,5 +1,7 @@
 import { API } from "../backend";
 
+
+// Function to create a new event
 export const createEvent = (event) => {
   return fetch(`${API}/create/events/`, {
     method: "POST",
@@ -18,6 +20,7 @@ export const createEvent = (event) => {
     });
 };
 
+// Function to fetch all events data
 
 export const getAllEvents = ()=>{
     return fetch(`${API}/events/`, {
@@ -30,6 +33,8 @@ export const getAllEvents = ()=>{
           console.log(err);
         });
 }
+
+// Function to like an event
 
 export const likeEvents = (event_id) => {
   return fetch(`${API}/events/${event_id}/like/`, {

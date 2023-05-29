@@ -6,15 +6,19 @@ import {getAllEvents,likeEvents} from "./eventapicalls"
 const Likedevents = () => {
   const [events, setEvents] = useState([]);
   const [toggle, setToggle] = useState(false);
+
+  // Function to fetch all events data
   const getAllevents = () => {
     getAllEvents().then((data) => {
-      setEvents(data);
+      setEvents(data);        // Set the events data received from the server
     });
   };
 
   useEffect(() => {
-    getAllevents();
+    getAllevents();  // Call the getAllevents function when the component mounts or when "toggle" state changes
   }, [toggle]);
+
+// Function to handle the like action on an event
 
   const likesHandler = (e,id)=>{
     likeEvents(id).then((data)=>{
@@ -29,6 +33,7 @@ const Likedevents = () => {
     <div>
       <Menu />
       <div className="container">
+        <h1 className="mt-3">Likes</h1>
         {events.map((event, index) => {
           return (
             event.is_liked && (
